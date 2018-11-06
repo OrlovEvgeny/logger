@@ -1,4 +1,4 @@
-#Easy logger
+# Easy logger
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/OrlovEvgeny/logger?v1)](https://goreportcard.com/report/github.com/OrlovEvgeny/logger)
 [![GoDoc](https://godoc.org/github.com/OrlovEvgeny/logger?status.svg)](https://godoc.org/github.com/OrlovEvgeny/logger)

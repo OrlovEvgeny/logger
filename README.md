@@ -5,13 +5,12 @@
 [![GoDoc](https://godoc.org/github.com/OrlovEvgeny/logger?status.svg)](https://godoc.org/github.com/OrlovEvgeny/logger)
 
 
-easy logger golang module
+easy logger golang mini module
 
 # Use
 
 ````go
-
-	//New return *log.Logger
+	//New return *log.Logger (https://godoc.org/log#Logger)
 	log := New(&Config{
 		AppName: "you application name",
 		Debug:   true,

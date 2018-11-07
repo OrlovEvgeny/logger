@@ -50,6 +50,6 @@ func (lw *Config) loop() {
 }
 
 //printDebug
-func printDebug(textLog string)  {
+func printDebug(textLog string) {
 	fmt.Println(textLog)
 }

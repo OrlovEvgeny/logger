@@ -11,7 +11,7 @@ easy logger golang mini module
 
 ````go
 	//New return *log.Logger (https://godoc.org/log#Logger)
-	log := New(&Config{
+	log := logger.New(&logger.Config{
 		AppName: "you application name",
 		Debug:   true,
 		LogFile: "./error.log",

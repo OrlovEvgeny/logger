@@ -27,6 +27,7 @@ func TestWrite(t *testing.T) {
 	}
 
 	time.Sleep(time.Second * 1)
+	fmt.Printf("%s : OK\n", t.Name())
 }
 
 //TestCount
@@ -51,6 +52,7 @@ func TestCount(t *testing.T) {
 	if count != writeLines {
 		t.Errorf("count != %d\n", writeLines)
 	}
+	fmt.Printf("%s : OK\n", t.Name())
 }
 
 //TestDeleteFile
@@ -59,6 +61,7 @@ func TestDeleteFile(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+	fmt.Printf("%s : OK\n", t.Name())
 }
 
 //letters

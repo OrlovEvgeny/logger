@@ -1,1 +1,1 @@
-module logger
+module github.com/OrlovEvgeny/logger

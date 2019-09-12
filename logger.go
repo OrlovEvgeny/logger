@@ -42,15 +42,16 @@ func (lw *Config) loop() {
 		return
 	}
 	defer logfile.Close()
+	builder := strings.Builder{}
 
 	for {
 		data := <-lw.logChannel
-		builder := strings.Builder{}
 		builder.Write(data)
 		textLog := builder.String()
 		if lw.Debug {
 			log.Println(textLog)
 		}
 		logfile.WriteString(textLog)
+		builder.Reset()
 	}
 }

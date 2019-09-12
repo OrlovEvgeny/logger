@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 const bufSize = 500
@@ -14,12 +15,12 @@ type Config struct {
 	Debug   bool
 	LogFile string
 
-	logChannel chan string
+	logChannel chan []byte
 }
 
 //New return https://godoc.org/log
 func New(lw *Config) *log.Logger {
-	lw.logChannel = make(chan string, bufSize)
+	lw.logChannel = make(chan []byte, bufSize)
 	go lw.loop()
 
 	prefix := fmt.Sprintf("<%s> - ", lw.AppName)
@@ -28,7 +29,7 @@ func New(lw *Config) *log.Logger {
 
 //Write implement io/writer
 func (lw *Config) Write(p []byte) (int, error) {
-	lw.logChannel <- string(p)
+	lw.logChannel <- p
 	return 0, nil
 }
 
@@ -43,7 +44,10 @@ func (lw *Config) loop() {
 	defer logfile.Close()
 
 	for {
-		textLog := fmt.Sprintf("%s", <-lw.logChannel)
+		data := <-lw.logChannel
+		builder := strings.Builder{}
+		builder.Write(data)
+		textLog := builder.String()
 		if lw.Debug {
 			log.Println(textLog)
 		}

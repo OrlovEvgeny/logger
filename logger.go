@@ -1,13 +1,12 @@
 package logger
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strings"
 )
 
-const bufSize = 500
+const bufSize = 5000
 
 //Config
 type Config struct {
@@ -23,14 +22,14 @@ func New(lw *Config) *log.Logger {
 	lw.logChannel = make(chan []byte, bufSize)
 	go lw.loop()
 
-	prefix := fmt.Sprintf("<%s> - ", lw.AppName)
+	prefix := "<" + lw.AppName + "> - "
 	return log.New(lw, prefix, log.LstdFlags)
 }
 
 //Write implement io/writer
 func (lw *Config) Write(p []byte) (int, error) {
 	lw.logChannel <- p
-	return 0, nil
+	return len(p), nil
 }
 
 //loop append file worker
@@ -42,16 +41,16 @@ func (lw *Config) loop() {
 		return
 	}
 	defer logfile.Close()
-	builder := strings.Builder{}
+	builder := new(strings.Builder)
 
 	for {
 		data := <-lw.logChannel
-		builder.Write(data)
-		textLog := builder.String()
 		if lw.Debug {
+			builder.Write(data)
+			textLog := builder.String()
+			builder.Reset()
 			log.Println(textLog)
 		}
-		logfile.WriteString(textLog)
-		builder.Reset()
+		logfile.Write(data)
 	}
 }
